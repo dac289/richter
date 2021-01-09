@@ -4,8 +4,8 @@ import json
 from plotly.graph_objs import Scattergeo, Layout
 from plotly import offline
 
-def get_data():
-    url = 'https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/2.5_week.geojson'
+def get_data(url):
+
     with urllib.request.urlopen(url) as f:
         data = f.read()
     json_data_to_dict = json.loads(data)
@@ -13,8 +13,10 @@ def get_data():
 
 def main():
 
-    all_data = get_data()
+    all_data = get_data(url)
     all_eq_data = all_data['features']
+
+    url = 'https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/2.5_week.geojson'
 
     mags = [(eq_dict['properties']['mag']) for eq_dict in all_eq_data]
     lons = [(eq_dict['geometry']['coordinates'][0]) for eq_dict in all_eq_data]
